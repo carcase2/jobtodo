@@ -9,37 +9,37 @@
   <body>
     <%- include('nav.html') %> 
     <div class="container">
+      <form action="/add" method="POST">
         <div class="form-group">
             <label>제목</label>
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-text" name="title">
         </div>
         <div class="form-group">
             <label>요청일</label>
-            <input type="date" class="form-control" name="title">
+            <input type="date" class="form-control" name="req_date">
         </div>
         <div class="form-group">
             <label>마감예정일</label>
-            <input type="date" class="form-control" name="title">
+            <input type="date" class="form-control" name="end_date">
         </div>
         <div class="form-group">
             <label>요청자</label>
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-control" name="req_people">
         </div>
         <div class="form-group">
             <label>세부내용</label>
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-control" name="detail">
         </div>
         <div class="form-group">
             <label>소요시간</label>
-            <input type="number" class="form-control" name="title">
+            <input type="number" class="form-control" name="cost_hour">
         </div>
         <div class="form-group">
             <label>완료일</label>
-            <input type="date" class="form-control" name="title">
+            <input type="date" class="form-control" name="complete_date">
         </div>
         <label for="job_state">진행상태</label>
-
-        <select id="job_state">
+        <select id="job_state" name="job_state">
           <option value="going">진행중</option>
           <option value="done">완료</option>
           <option value="notstart" selected="selected">미진행</option>
@@ -48,21 +48,20 @@
 
         <div class="form-group">
             <label>비고</label>
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-control" name="remark">
         </div>
-         <label for="job_state">난이도</label>
-         <select id="job_state">
-          <option value="going">*</option>
-          <option value="done">**</option>
-          <option value="notstart">***</option>
-          <option value="delay">****</option>
-          <option value="delay">******</option>
+
+         <label for="job_level">난이도</label>
+         <select id="job_level" name="job_level">
+          <option value="very_easy" selected="selected">*</option>
+          <option value="easy">**</option>
+          <option value="normal">***</option>
+          <option value="hard">****</option>
+          <option value="very_hard">******</option>
         </select>
-        
 
-
-
-        
+        <button type="submit" class="btn btn-outline-secondary">저장</button>
+      </form>        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
