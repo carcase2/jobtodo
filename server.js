@@ -31,6 +31,7 @@ app.get('/',function(요청,응답){
     응답.render('index.ejs')
 })
 
+
 app.get('/write', function(요청, 응답) { 
     응답.render('write.ejs')
 });
@@ -53,3 +54,6 @@ app.post ('/add', function(요청, 응답){
         
     })
 });
+
+
+// test
