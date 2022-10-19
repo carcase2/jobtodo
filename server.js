@@ -47,7 +47,7 @@ app.post ('/add', function(요청, 응답){
         ,진행상태:요청.body.job_state
         ,비고:요청.body.remark
         ,난이도:요청.body.job_level}
-    console.log(요청.body)
+    console.log(저장할것)
     db.collection('Job_List').insertOne(저장할것,function(){
         console.log('저장되')
         

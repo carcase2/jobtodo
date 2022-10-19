@@ -10,55 +10,59 @@
     <%- include('nav.html') %> 
     <div class="container">
       <form action="/add" method="POST">
-        <div class="form-group">
+        <div class="form-group mt-3 mb-3" >
             <label>제목</label>
             <input type="text" class="form-text" name="title">
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3 mb-3">
             <label>요청일</label>
-            <input type="date" class="form-control" name="req_date">
+            <input type="date" name="req_date">
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3 mb-3">
             <label>마감예정일</label>
-            <input type="date" class="form-control" name="end_date">
+            <input type="date" name="end_date">
         </div>
-        <div class="form-group">
+
+        <div class="form-group mt-3 mb-3">
+          <label>완료일</label>
+          <input type="date" name="complete_date">
+      </div>
+        <div class="form-group mt-3 mb-3">
             <label>요청자</label>
-            <input type="text" class="form-control" name="req_people">
+            <input type="text"  name="req_people">
         </div>
-        <div class="form-group">
-            <label>세부내용</label>
-            <input type="text" class="form-control" name="detail">
-        </div>
-        <div class="form-group">
+
+        <div class="form-group mt-3 mb-3">
             <label>소요시간</label>
-            <input type="number" class="form-control" name="cost_hour">
+            <input type="number" name="cost_hour">
         </div>
-        <div class="form-group">
-            <label>완료일</label>
-            <input type="date" class="form-control" name="complete_date">
-        </div>
-        <label for="job_state">진행상태</label>
+        <label for="job_state" class="mt-3 mb-3">진행상태</label>
         <select id="job_state" name="job_state">
           <option value="going">진행중</option>
           <option value="done">완료</option>
           <option value="notstart" selected="selected">미진행</option>
           <option value="delay">보류</option>
         </select>
+        <label for="job_level">난이도</label>
+        <select id="job_level" name="job_level">
+         <option value="very_easy" selected="selected">*</option>
+         <option value="easy">**</option>
+         <option value="normal">***</option>
+         <option value="hard">****</option>
+         <option value="very_hard">******</option>
+       </select>
 
-        <div class="form-group">
+
+        <div class="form-group mt-3 mb-3">
+          <label>세부내용</label>
+          <input type="text" class="form-control" name="detail">
+      </div>        
+
+        <div class="form-group mt-3 mb-3">
             <label>비고</label>
             <input type="text" class="form-control" name="remark">
         </div>
 
-         <label for="job_level">난이도</label>
-         <select id="job_level" name="job_level">
-          <option value="very_easy" selected="selected">*</option>
-          <option value="easy">**</option>
-          <option value="normal">***</option>
-          <option value="hard">****</option>
-          <option value="very_hard">******</option>
-        </select>
 
         <button type="submit" class="btn btn-outline-secondary">저장</button>
       </form>        
