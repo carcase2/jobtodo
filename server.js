@@ -36,21 +36,39 @@ app.get('/write', function(요청, 응답) {
     응답.render('write.ejs')
 });
 
+app.get('/search', function(요청, 응답) { 
+    db.collection('Job_List').find().toArray(function(에러,결과){
+        console.log(결과);
+        응답.render('list.ejs',{posts:결과})
+    })
+    
+});
+
+
 app.post ('/add', function(요청, 응답){
     응답.send('전송완료2');
-    var 저장할것 = {
-        제목: 요청.body.title
-        ,세부내용:요청.body.detail
-        ,요청날짜:요청.body.req_date
-        ,마감예정일:요청.body.end_date
-        ,소용시간:요청.body.cost_time
-        ,완료일:요청.body.complet_date
-        ,진행상태:요청.body.job_state
-        ,비고:요청.body.remark
-        ,난이도:요청.body.job_level}
-    console.log(저장할것)
-    db.collection('Job_List').insertOne(저장할것,function(){
-        console.log('저장되')
+    db.collection('counter').findOne({name:'게시물갯수'},function(에러,결과){
+        var CalltotalPost = 결과.totalPost;
+        var 저장할것 = {
+            _id:(CalltotalPost + 1)
+            ,제목: 요청.body.title
+            ,세부내용:요청.body.detail
+            ,요청날짜:요청.body.req_date
+            ,마감예정일:요청.body.end_date
+            ,소용시간:요청.body.cost_time
+            ,완료일:요청.body.complet_date
+            ,진행상태:요청.body.job_state
+            ,비고:요청.body.remark
+            ,난이도:요청.body.job_level}
+
+            db.collection('Job_List').insertOne(저장할것,function(){
+                console.log('저장됨');
+                db.collection('counter').updateOne({name:'게시물갯수'},{$inc:{totalPost : 1}},function(에러,결과){
+                    console.log('counter 숫자 증가');
+                    
+
+                })
+              })
         
     })
 });
