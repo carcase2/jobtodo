@@ -9,6 +9,8 @@ const express = require('express');
 const app = express();
 const bodyParser= require('body-parser');
 const { Db } = require('mongodb');
+const { query } = require('express');
+
 app.use(bodyParser.urlencoded({extended: true}))
 
 const MongoClient = require('mongodb').MongoClient;
@@ -36,7 +38,7 @@ app.get('/write', function(요청, 응답) {
     응답.render('write.ejs')
 });
 
-app.get('/search', function(요청, 응답) { 
+app.get('/list', function(요청, 응답) { 
     db.collection('Job_List').find().toArray(function(에러,결과){
         console.log(결과);
         응답.render('list.ejs',{posts:결과})
@@ -73,5 +75,26 @@ app.post ('/add', function(요청, 응답){
     })
 });
 
+app.get('/search',function(요청,응답){
+    console.log(요청.query);
+    var 검색조건 = [
+        {
+          $search: {
+            index: 'titleSearch',
+            text: {
+              query: 요청.query.value,
+              path: '제목'  // 제목날짜 둘다 찾고 싶으면 ['제목', '날짜']
+            }
+          }
+        },
+       { $sort : { _id : 1 } },
+       { $limit : 10 },
+       { $project : { 제목 : 1, _id : 0 } }
+    ]
+    db.collection('Job_List').aggregate(검색조건).toArray((에러,결과)=>{
+        console.log(결과)
+        응답.render('search.ejs',{posts : 결과})
+    })
+})
 
 // test
