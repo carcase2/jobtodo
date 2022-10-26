@@ -10,6 +10,9 @@ const app = express();
 const bodyParser= require('body-parser');
 const { Db } = require('mongodb');
 const { query } = require('express');
+const methodOverride = require('method-override')
+
+app.use(methodOverride('_method')) 
 
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -38,10 +41,33 @@ app.get('/write', function(요청, 응답) {
     응답.render('write.ejs')
 });
 
+app.get('/edit/:id', function(요청, 응답) { 
+    db.collection('Job_List').findOne({ _id : parseInt(요청.params.id) }, function(에러, 결과){
+        console.log(결과);
+    응답.render('edit.ejs',{post : 결과})
+});
+
+app.put('/edit',function(요청,응답){
+    db.collection('Job_List').updateOne({_id : parseInt(요청.body.id) },
+    {$set:{
+        제목: 요청.body.title
+        ,세부내용:요청.body.detail
+        ,요청날짜:요청.body.req_date
+        ,마감예정일:요청.body.end_date
+        ,소용시간:요청.body.cost_time
+        ,완료일:요청.body.complete_date
+        ,요청자:요청.body.req_people
+        ,진행상태:요청.body.job_state
+        ,비고:요청.body.remark          
+        ,난이도:요청.body.job_level       
+    }},function(에러,결과){응답.redirect('/list')})
+})
+
+});
 app.get('/list', function(요청, 응답) { 
     db.collection('Job_List').find().toArray(function(에러,결과){
         // console.log(결과);
-        응답.render('list.ejs',{posts:결과})
+    응답.render('list.ejs',{posts:결과})
     })
     
 });
@@ -66,10 +92,12 @@ app.post ('/add', function(요청, 응답){
             ,요청날짜:요청.body.req_date
             ,마감예정일:요청.body.end_date
             ,소용시간:요청.body.cost_time
-            ,완료일:요청.body.complet_date
+            ,완료일:요청.body.complete_date
+            ,요청자:요청.body.req_people
             ,진행상태:요청.body.job_state
-            ,비고:요청.body.remark
-            ,난이도:요청.body.job_level}
+            ,비고:요청.body.remark          
+            ,난이도:요청.body.job_level
+        }
 
             db.collection('Job_List').insertOne(저장할것,function(){
                 console.log('저장됨');
@@ -99,10 +127,11 @@ app.get('/search',function(요청,응답){
        { $limit : 10 },
        { $project : { 제목 : 1, _id : 0 } }
     ]
-    db.collection('Job_List').aggregate(검색조건).toArray((에러,결과)=>{
-        // console.log(결과)
-        응답.render('search.ejs',{posts : 결과})
-    })
+    console.log(요청.query);
+    db.collection('Job_List').aggregate(검색조건).toArray((에러, 결과)=>{
+    console.log(결과)
+    응답.render('search.ejs', {posts : 결과})
+  })
 })
 
 // test

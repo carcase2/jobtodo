@@ -12,27 +12,34 @@
     <div class="container input-group mb-2">
         <input class="form-control" id="search-input">
         <button class="input-group-append btn btn-danger" id="search">검색</button>
-      </div>
+    </div>
     <div class="container">
        <ul class="list-group">
             <% for (var i = 0;i < posts.length;i++){ %> 
                 <li class="list-group-item">
                     <p>글번호: <%= posts[i]._id %> </p>
                     <p>제목: <%= posts[i].제목 %> </p> 
-                    <p>세부내용: <%= posts[i].세부내용 %> </p> 
-                    <p>요청날짜: <%= posts[i].요청날짜 %> </p> 
-                    <p>마감예정날짜: <%= posts[i].마감예정일 %> </p> 
+                    <p>세부내용: <%= posts[i].세부내용 %> </p>                    
+                    <p>요청날짜: <%= posts[i].요청날짜 %> </p>
+                    <p>마감예정날짜: <%= posts[i].마감예정일 %> </p>
                     <p>소요시간: <%= posts[i].소요시간 %> </p> 
                     <p>완료일: <%= posts[i].완료일 %> </p> 
+                    <p>요청자: <%= posts[i].요청자 %> </p> 
                     <p>진행상태: <%= posts[i].진행상태 %> </p> 
-                    <p>비고: <%= posts[i].비고 %> </p> 
-
+                    <p>난이도: <%= posts[i].난이도 %> </p>
+                    <p>비고: <%= posts[i].비고 %> </p>                  
                 </li>
+                <!-- <a href="/edit/<%= posts[i]._id %>">수정</a> -->
+                <form action="/edit/<%= posts[i]._id %>" method="GET">
+                    <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit"><%= posts[i]._id %> 수정버튼</button>
+                </form>
             <% } %>
+
        </ul> 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
+ 
         $('#search').click(function(){
             var input_value = $('#search-input').val();
             console.log(input_value);
