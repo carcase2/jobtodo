@@ -55,6 +55,7 @@
  
         $('#search').click(function(){
             var input_value = $('#search-input').val();
+            var state_value = $('#job_state').val()
             console.log(input_value);
             if(input_value === '')
             {
@@ -62,7 +63,7 @@
             }
             else
             {                
-                window.location.replace('/search?value=' + input_value);
+                window.location.replace('/search?value=' + input_value + '&' + 'state=' + state_value);
             }
         })
     </script>

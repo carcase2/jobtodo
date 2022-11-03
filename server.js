@@ -131,20 +131,27 @@ app.get('/search',function(요청,응답){
             index: 'titleSearch',
             text: {
               query: 요청.query.value,
-              path: ['제목', '날짜']  // 제목날짜 둘다 찾고 싶으면 ['제목', '날짜']
+              path: '제목'  // 제목날짜 둘다 찾고 싶으면 ['제목', '날짜']
             }
-          }
+          },
+          
         },
        { $sort : { _id : 1 } },
        { $limit : 10 },
+       {$match :{진행상태:요청.query.state}}
     //    { $project : { 제목 : 1, _id : 0 } }
     ]
-    console.log(요청.query);
-    db.collection('Job_List').aggregate(검색조건).toArray((에러, 결과)=>{
-    //  db.collection('Job_List').find({제목:요청.query.value}).toArray((에러, 결과)=>{
 
-    console.log(결과) 
-    응답.render('search.ejs', {posts : 결과})
+  
+    console.log('요청.query.value= ' +  요청.query.value);
+    console.log('요청.query.state= ' +  요청.query.state);
+    db.collection('Job_List').aggregate(검색조건).toArray((에러, 결과)=>{
+    //   db.collection('Job_List').find({진행상태:요청.query.state}).toArray((에러, 결과)=>{
+    
+    //   })
+      console.log(결과) 
+      응답.render('search.ejs', {posts : 결과})
+
   })
 })
 
