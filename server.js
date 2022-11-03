@@ -72,7 +72,21 @@ app.get('/list', function(요청, 응답) {
     
 });
 
+app.get('/print', function(요청, 응답) { 
+    db.collection('Job_List').find().toArray(function(에러,결과){
+        // console.log(결과);
+    응답.render('print.ejs',{posts:결과})
+    })
+    
+});
 
+app.get('/totheline', function(요청, 응답) { 
+    db.collection('Job_List').find().toArray(function(에러,결과){
+        // console.log(결과);
+    응답.render('totheline.ejs',{posts:결과})
+    })
+    
+});
 app.get('/history', function(요청, 응답) { 
     db.collection('Job_List').find().toArray(function(에러,결과){
         console.log(결과);
@@ -83,6 +97,7 @@ app.get('/history', function(요청, 응답) {
 
 app.post ('/add', function(요청, 응답){
     응답.send('전송완료2');
+    // 응답.redirect('/');
     db.collection('counter').findOne({name:'게시물갯수'},function(에러,결과){
         var CalltotalPost = 결과.totalPost;
         var 저장할것 = {
@@ -98,17 +113,14 @@ app.post ('/add', function(요청, 응답){
             ,비고:요청.body.remark          
             ,난이도:요청.body.job_level
         }
-
             db.collection('Job_List').insertOne(저장할것,function(){
                 console.log('저장됨');
                 db.collection('counter').updateOne({name:'게시물갯수'},{$inc:{totalPost : 1}},function(에러,결과){
                     console.log('counter 숫자 증가');
-                    
-
                 })
               })
-        
     })
+    // 응답.redirect('/list');
 });
 
 app.get('/search',function(요청,응답){
@@ -119,17 +131,19 @@ app.get('/search',function(요청,응답){
             index: 'titleSearch',
             text: {
               query: 요청.query.value,
-              path: '제목'  // 제목날짜 둘다 찾고 싶으면 ['제목', '날짜']
+              path: ['제목', '날짜']  // 제목날짜 둘다 찾고 싶으면 ['제목', '날짜']
             }
           }
         },
        { $sort : { _id : 1 } },
        { $limit : 10 },
-       { $project : { 제목 : 1, _id : 0 } }
+    //    { $project : { 제목 : 1, _id : 0 } }
     ]
     console.log(요청.query);
     db.collection('Job_List').aggregate(검색조건).toArray((에러, 결과)=>{
-    console.log(결과)
+    //  db.collection('Job_List').find({제목:요청.query.value}).toArray((에러, 결과)=>{
+
+    console.log(결과) 
     응답.render('search.ejs', {posts : 결과})
   })
 })

@@ -8,15 +8,27 @@
   </head>
   <body>
     <%- include('nav.html') %> 
-    <h3>list 화면입니다. </h3>
+    <h3>조회 화면입니다. </h3>
     <div class="container input-group mb-2">
-        <input class="form-control" id="search-input">
-        <button class="input-group-append btn btn-danger" id="search">검색</button>
+        <div>
+            <input class="form-control m-2" id="search-input">
+            <button class="input-group-append btn btn-danger m-2" id="search">검색</button>
+        </div>
+        <div>
+            <label for="" >진행사항</label>
+            <select id="job_state" name="job_state">
+                <option value="all" selected="selected">전체</option>
+                <option value="going">진행중</option>
+                <option value="done">완료</option>
+                <option value="notstart" >미진행</option>
+                <option value="delay">보류</option>
+            </select>
+        </div>
     </div>
     <div class="container">
        <ul class="list-group">
             <% for (var i = 0;i < posts.length;i++){ %> 
-                <li class="list-group-item">
+                <li class="list-group-item mb-2 mt-2" >
                     <p>글번호: <%= posts[i]._id %> </p>
                     <p>제목: <%= posts[i].제목 %> </p> 
                     <p>세부내용: <%= posts[i].세부내용 %> </p>                    
@@ -27,12 +39,13 @@
                     <p>요청자: <%= posts[i].요청자 %> </p> 
                     <p>진행상태: <%= posts[i].진행상태 %> </p> 
                     <p>난이도: <%= posts[i].난이도 %> </p>
-                    <p>비고: <%= posts[i].비고 %> </p>                  
+                    <p>비고: <%= posts[i].비고 %> </p>    
+                    <form action="/edit/<%= posts[i]._id %>" method="GET">
+                        <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit">수정</button>
+                    </form>              
                 </li>
                 <!-- <a href="/edit/<%= posts[i]._id %>">수정</a> -->
-                <form action="/edit/<%= posts[i]._id %>" method="GET">
-                    <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit"><%= posts[i]._id %> 수정버튼</button>
-                </form>
+                
             <% } %>
 
        </ul> 
@@ -48,8 +61,7 @@
                 window.location.replace('/list');    
             }
             else
-            {
-                
+            {                
                 window.location.replace('/search?value=' + input_value);
             }
         })
