@@ -124,7 +124,9 @@ app.post ('/add', function(요청, 응답){
 });
 
 app.get('/search',function(요청,응답){
-    console.log(요청.query===null);
+    // console.log(요청.query===null);
+    console.log(요청.query.state==="all");   
+    if(요청.query.state==="전체"){
     var 검색조건 = [
         {
           $search: {
@@ -138,10 +140,29 @@ app.get('/search',function(요청,응답){
         },
        { $sort : { _id : 1 } },
        { $limit : 10 },
-       {$match :{진행상태:요청.query.state}}
+
+    //    {$match :{진행상태:요청.query.state}}
     //    { $project : { 제목 : 1, _id : 0 } }
     ]
-
+    }else{
+        var 검색조건 = [
+            {
+              $search: {
+                index: 'searchTitle',
+                text: {
+                  query: 요청.query.value,
+                  path: '제목'  // 제목날짜 둘다 찾고 싶으면 ['제목', '날짜']
+                }
+              },
+              
+            },
+           { $sort : { _id : 1 } },
+           { $limit : 10 },
+    
+           {$match :{진행상태:요청.query.state}}
+        //    { $project : { 제목 : 1, _id : 0 } }
+        ]   
+    }
   
     console.log('요청.query.value= ' +  요청.query.value);
     console.log('요청.query.state= ' +  요청.query.state);
