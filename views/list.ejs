@@ -9,65 +9,15 @@
   </head>
   <body>
     <%- include('nav.html') %> 
-    <div class="container input-group mb-2">
-        <div>
-            <h3>조회 화면입니다. </h3>
-            <input class="form-control m-2" id="search-input">
-            
-            <label for="" >진행사항</label>
-            <select id="job_state" name="job_state">
-                <option value="전체" selected="selected">전체</option>
-                <option value="진행중">진행중</option>
-                <option value="완료">완료</option>
-                <option value="미진행" >미진행</option>
-                <option value="보류">보류</option>
-            </select>
-            <button class="input-group-append btn btn-danger m-2" id="search">검색</button>
-        </div>
-    </div>
-  
+    <%- include('searchbar.html') %> 
+    
     <div class="container">
-        <table style="width:100% "  class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th style="width:15%"scope="col"><font size = "2"><center>제목</center> </font></th>
-                <th style="width:30%" scope="col"><font size = "2"><center>세부내용</center></font></th>
-                <th style="width:8%" scope="col"><font size = "2"><center>요청날짜</center></font></th>
-                <th style="width:8%" scope="col"><font size = "2"><center>예정날짜</center></font></th>
-                <!-- <th scope="col">소요시간</th> -->
-                <th style="width:8%" scope="col"><font size = "2"><center>완료일</center></font></th>
-                <th style="width:6%" scope="col"><font size = "2"><center>요청자</center></font></th>
-                <th style="width:7%" scope="col"><font size = "2"><center>진행상태</center></font></th>
-                <th scope="col"><font size = "2">난이도</font></th>
-                <th style="width: 10%" scope="col"><font size = "2"><center>비고</center></font></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% for (var i = 0;i < posts.length;i++){ %> 
-              <tr>
-                <th scope="row"><%= posts[i]._id %></th>
-                <td><font size = "3"><%= posts[i].제목 %></font></td>
-                <td><font size = "2"><%= posts[i].세부내용 %></font></td>
-                <td><font size = "2"><%= posts[i].요청날짜 %></font></td>
-                <td><font size = "2"><%= posts[i].마감예정일 %></font></td>
-                <!-- <td><%= posts[i].소요시간 %></td> -->
-                <td><font size = "2"><%= posts[i].완료일 %></font></td>
-                <td><font size = "2"><%= posts[i].요청자 %></font></td>
-                <td><font size = "2"><%= posts[i].진행상태 %></font></td>
-                <td><font size = "2"><%= posts[i].난이도 %></font></td>
-                <td><font size = "2"><%= posts[i].비고 %></font></td>
-                <td>
-                  <form action="/edit/<%= posts[i]._id %>" method="GET">
-                    <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit">수정</button>
-                </form>  
-                  <button class="delete" data-id="<%= posts[i]._id %>">삭제</button> 
-                </td>
-              </tr>
-              <% } %>
-            </tbody>
-          </table>
-       <ul class="list-group">
+      <h3>조회 화면입니다. </h3>
+    </div>
+    
+    <%- include('table.ejs') %> 
+   
+       <!-- <ul class="list-group">
             <% for (var i = 0;i < posts.length;i++){ %> 
                 <li class="list-group-item mb-2 mt-2" >
                     <p>글번호: <%= posts[i]._id %> </p>
@@ -86,11 +36,9 @@
                     </form>    
                     <button class="delete" data-id="<%= posts[i]._id %>">삭제</button>        
                 </li>
-                <!-- <a href="/edit/<%= posts[i]._id %>">수정</a> -->
-                
             <% } %>
 
-       </ul> 
+       </ul>  -->
     </div>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
