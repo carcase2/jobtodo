@@ -8,8 +8,11 @@
   </head>
   <body>
     <%- include('nav.html') %> 
-    <h3>search 화면입니다. </h3>
+    
     <div class="container input-group mb-2">
+      <div>
+        <h3>search 화면입니다. </h3>
+      </div>
       <div>
         <input class="form-control" id="search-input">
         <button class="input-group-append btn btn-danger" id="search">검색</button>
@@ -26,26 +29,41 @@
       </div>
       </div>
     <div class="container">
-       <ul class="list-group">
-       
-            <% for (var i = 0;i < posts.length;i++){ %> 
-                <li class="list-group-item">
-                    <p>글번호: <%= posts[i]._id %> </p>
-                    <p>제목: <%= posts[i].제목 %> </p> 
-                    <p>세부내용: <%= posts[i].세부내용 %> </p> 
-                    <p>요청날짜: <%= posts[i].요청날짜 %> </p> 
-                    <p>마감예정날짜: <%= posts[i].마감예정일 %> </p> 
-                    <p>소요시간: <%= posts[i].소요시간 %> </p> 
-                    <p>완료일: <%= posts[i].완료일 %> </p> 
-                    <p>진행상태: <%= posts[i].진행상태 %> </p> 
-                    <p>비고: <%= posts[i].비고 %> </p>                     
-                </li>
-                <!-- <a href="/edit/<%= posts[i]._id %>">수정</a> -->
-                <form action="/edit/<%= posts[i]._id %>" method="GET">
-                  <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit">수정버튼</button>
-              </form>
-            <% } %>
-       </ul> 
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">제목</th>
+            <th scope="col">세부내용</th>
+            <th scope="col">요청날짜</th>
+            <th scope="col">요청날짜</th>
+            <th scope="col">마감예정날짜</th>
+            <th scope="col">소요시간</th>
+            <th scope="col">완료일</th>
+            <th scope="col">요청자</th>
+            <th scope="col">진행상태</th>
+            <th scope="col">난이도</th>
+            <th scope="col">비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0;i < posts.length;i++){ %> 
+          <tr>
+            <th scope="row"><%= posts[i]._id %></th>
+            <td><%= posts[i].제목 %></td>
+            <td><%= posts[i].세부내용 %></td>
+            <td><%= posts[i].요청날짜 %></td>
+            <td><%= posts[i].마감예정일 %></td>
+            <td><%= posts[i].소요시간 %></td>
+            <td><%= posts[i].완료일 %></td>
+            <td><%= posts[i].요청자 %></td>
+            <td><%= posts[i].진행상태 %></td>
+            <td><%= posts[i].난이도 %></td>
+            <td><%= posts[i].비고 %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>

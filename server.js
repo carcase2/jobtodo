@@ -118,6 +118,7 @@ app.post ('/add', function(요청, 응답){
                 db.collection('counter').updateOne({name:'게시물갯수'},{$inc:{totalPost : 1}},function(에러,결과){
                     console.log('counter 숫자 증가');
                 })
+                // 응답.redirect('/list');
               })
     })
     // 응답.redirect('/list');
