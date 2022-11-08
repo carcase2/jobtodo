@@ -26,7 +26,7 @@ MongoClient.connect('mongodb+srv://carcase2:ka76062989@cluster0.9gddo.mongodb.ne
 	if (에러) return console.log(에러)
 	db = client.db('COAD_Todo');
  
-	  app.listen(8080, function () {
+	  app.listen(process.env.PORT || 8080, function () {
 		console.log('listening on 8080')
 	});
 });
