@@ -36,6 +36,14 @@ app.get('/',function(요청,응답){
     응답.render('index.ejs')
 })
 
+app.delete('/delete', function(요청, 응답){
+    요청.body._id = parseInt(요청.body._id)
+    console.log('/delete왔음')
+    db.collection('Job_List').deleteOne(요청.body, function(에러, 결과){
+      console.log('삭제완료')
+    })
+    응답.send('삭제완료')
+  });
 
 app.get('/write', function(요청, 응답) { 
     응답.render('write.ejs')

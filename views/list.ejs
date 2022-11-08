@@ -75,7 +75,8 @@
                     <p>비고: <%= posts[i].비고 %> </p>    
                     <form action="/edit/<%= posts[i]._id %>" method="GET">
                         <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit">수정</button>
-                    </form>              
+                    </form>    
+                    <button class="delete" data-id="<%= posts[i]._id %>">삭제</button>        
                 </li>
                 <!-- <a href="/edit/<%= posts[i]._id %>">수정</a> -->
                 
@@ -85,7 +86,18 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
- 
+          $('.delete').click(function(e){
+          $.ajax({
+            method : 'DELETE',
+            url : '/delete',
+            data : { _id : e.target.dataset.id }
+          }).done(function(결과){
+            console.log('.delete')
+            // $(this).parent('li').fadeOut();
+            window.location.reload();
+            //AJAX 성공시 실행할 코드는 여기
+          })
+        });
         $('#search').click(function(){
             var input_value = $('#search-input').val();
             var state_value = $('#job_state').val()
