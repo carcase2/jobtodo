@@ -83,7 +83,7 @@ app.get('/print', function(요청, 응답) {
 app.get('/totheline', function(요청, 응답) { 
     db.collection('Job_List').find().toArray(function(에러,결과){
         // console.log(결과);
-    응답.render('totheline.ejs',{posts:결과})
+    응답.render('list.ejs',{posts:결과})
     })
     
 });
