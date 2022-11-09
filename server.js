@@ -4,13 +4,14 @@
 // 4. git init (git 사용)
 // 5. git commit -m "first commit" (처음으로 commit 함)
 
-
+const request = require('request')
 const express = require('express');
 const app = express();
 const bodyParser= require('body-parser');
 const { Db } = require('mongodb');
 const { query } = require('express');
 const methodOverride = require('method-override')
+const fs = require('fs')
 
 app.use(methodOverride('_method')) 
 
@@ -18,7 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 const MongoClient = require('mongodb').MongoClient;
 app.set('view engine','ejs');
-
+const TARGET_URL = 'https://notify-api.line.me/api/notify'
+const TOKEN = 'qVONEIy5s2nJc8AU1ylzY5xYocCEh9TMcfNzzclhudE'
 
 var db;
 
@@ -185,4 +187,51 @@ app.get('/search',function(요청,응답){
   })
 })
 
-// test
+// request.post({
+//     url: TARGET_URL,
+//     headers: {
+//       'Authorization': `Bearer ${TOKEN}`
+//     },
+//     form: {
+//       message: '안녕하세요. LINE Notify 스티커 테스트입니다.',
+//       stickerPackageId: "446",
+//       stickerId: "1989"
+      
+//     }
+//   }, (error, response, body) => {
+//     // 요청 완료
+//     console.log(body)
+//   })
+
+const form = request.post({
+    url: TARGET_URL,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${TOKEN}`
+    }
+  }, (error, response, body) => {
+    // 요청 완료
+    console.log(body)
+  }).form()
+    form.append('message', "안녕하세요. LINE Notify 이미지 테스트입니다.11")
+    form.append('stickerPackageId', "446")
+    form.append('stickerId', "1989")
+//   stickerPackageId: "446",
+//   stickerId: "1989"
+  
+
+
+ // const form = request.post({
+//     url: TARGET_URL,
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//       'Authorization': `Bearer ${TOKEN}`
+//     }
+//   }, (error, response, body) => {
+//     // 요청 완료
+//     console.log(body)
+//   }).form()
+   
+//   // 데이터를 지정합니다.
+//   form.append('message', '안녕하세요. LINE Notify 이미지 테스트입니다.')
+//   form.append('imageFile', fs.createReadStream('./google_logo.png'))

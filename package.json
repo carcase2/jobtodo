@@ -16,6 +16,7 @@
     "heroku": "^7.66.0",
     "method-override": "^3.0.0",
     "mongodb": "^4.10.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "request": "^2.88.2"
   }
 }
