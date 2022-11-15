@@ -186,16 +186,17 @@ app.get('/search',function(요청,응답){
 
   })
 })
+
 // request.post({
 //     url: TARGET_URL,
 //     headers: {
+//       'Content-Type': 'multipart/form-data',
 //       'Authorization': `Bearer ${TOKEN}`
 //     },
 //     form: {
-//       message: '안녕하세요. LINE Notify 스티커 테스트입니다.',
+//       message: '안녕하세요. LINE Notify 스티커 테스트입니다222',
 //       stickerPackageId: "446",
 //       stickerId: "1989"
-      
 //     }
 //   }, (error, response, body) => {
 //     // 요청 완료
@@ -219,27 +220,7 @@ app.get('/search',function(요청,응답){
 //     console.log(body)
 //   })
 
-const form = request.post({
-    url: TARGET_URL,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${TOKEN}`
-    }
-  }, (error, response, body) => {
-    // 요청 완료
-    console.log(body)
-  }).form()
-    form.append('message', "안녕하세요. LINE Notify 이미지 테스트입니다.11")
-    form.append('stickerPackageId', "446")
-    form.append('stickerId', "1989")
-
-    
-//   stickerPackageId: "446",
-//   stickerId: "1989"
-  
-
-
- // const form = request.post({
+// const form = request.post({
 //     url: TARGET_URL,
 //     headers: {
 //       'Content-Type': 'multipart/form-data',
@@ -249,7 +230,27 @@ const form = request.post({
 //     // 요청 완료
 //     console.log(body)
 //   }).form()
+//     form.append('message', "안녕하세요. LINE Notify 이미지 테스트입니다.11")
+//     form.append('stickerPackageId', "446")
+//     form.append('stickerId', "1989")
+
+    
+//   stickerPackageId: "446",
+//   stickerId: "1989"
+  
+
+
+ const form = request.post({
+    url: TARGET_URL,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${TOKEN}`
+    }
+  }, (error, response, body) => {
+    // 요청 완료
+    console.log(body)
+  }).form()
    
-//   // 데이터를 지정합니다.
-//   form.append('message', '안녕하세요. LINE Notify 이미지 테스트입니다.')
-//   form.append('imageFile', fs.createReadStream('./google_logo.png'))
+  // 데이터를 지정합니다.
+  form.append('message', '안녕하세요. LINE Notify 이미지 테스트입니다.')
+  form.append('imageFile', fs.createReadStream('./google_logo.png'))

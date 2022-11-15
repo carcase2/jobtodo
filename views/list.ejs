@@ -11,8 +11,15 @@
     <%- include('nav.html') %> 
     <%- include('searchbar.html') %> 
     
-    <div class="container">
+    <div class="container input-group mb-2">
       <h3>조회 화면입니다. </h3>
+      <button id="convert">
+        Convert to image
+        </button>
+        <div id="result">
+           <!-- Result will appear be here -->
+        </div>
+
     </div>
     
     <%- include('table.ejs') %> 
@@ -39,9 +46,25 @@
             <% } %>
 
        </ul>  -->
+ 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js"></script>
     <script>
+          function convertToImage() {
+           var resultDiv = document.getElementById("result");
+           html2canvas(document.getElementById("todoTable"), {
+              background: '#FFFFFF',
+               onrendered: function(canvas) {
+                   var img = canvas.toDataURL("image/png");
+                   result.innerHTML = '<a download="test.jpeg" href="'+img+'">test</a>';
+                   }
+           });
+        }        
+        //click event
+        var convertBtn = document.getElementById("convert");
+        convertBtn.addEventListener('click', convertToImage);
+
           $('.delete').click(function(e){
           $.ajax({
             method : 'DELETE',

@@ -5,42 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>COAD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  </head>
+    <script src="src/jquery.table2excel.js"></script>
+
   <body>
     <%- include('nav.html') %> 
    
     <div class="container input-group mb-2">
         <h3>출력 화면입니다. </h3>
-        <input class="form-control" id="search-input">
-        <button class="input-group-append btn btn-danger" id="search">검색</button>
-    </div>
-    <div class="container">
-       <ul class="list-group">
-            <% for (var i = 0;i < posts.length;i++){ %> 
-                <li class="list-group-item">
-                    <p>글번호: <%= posts[i]._id %> </p>
-                    <p>제목: <%= posts[i].제목 %> </p> 
-                    <p>세부내용: <%= posts[i].세부내용 %> </p>                    
-                    <p>요청날짜: <%= posts[i].요청날짜 %> </p>
-                    <p>마감예정날짜: <%= posts[i].마감예정일 %> </p>
-                    <p>소요시간: <%= posts[i].소요시간 %> </p> 
-                    <p>완료일: <%= posts[i].완료일 %> </p> 
-                    <p>요청자: <%= posts[i].요청자 %> </p> 
-                    <p>진행상태: <%= posts[i].진행상태 %> </p> 
-                    <p>난이도: <%= posts[i].난이도 %> </p>
-                    <p>비고: <%= posts[i].비고 %> </p>                  
-                </li>
-                <!-- <a href="/edit/<%= posts[i]._id %>">수정</a> -->
-                <form action="/edit/<%= posts[i]._id %>" method="GET">
-                    <button value = "<%= posts[i]._id %> " class="input-group-append btn btn-danger" id="edit"> 수정버튼</button>
-                </form>
-            <% } %>
+        <!-- <input class="form-control" id="search-input">
+        <button class="input-group-append btn btn-danger" id="search">검색</button> -->
+        <button id="convert">
+          Convert to image
+          </button>
+          <div id="result">
+             <!-- Result will appear be here -->
+          </div>
 
-       </ul> 
     </div>
+
+    <%- include('table.ejs') %> 
+    <!-- <script src="table2excel.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js"></script>
     <script>
- 
+        // var table2excel = new Table2Excel();
+        // document.getElementById('todoTable').addEventListener('click', function() {
+        // table2excel.export(document.querySelectorAll('table'));
+        // console.log("click_excel")
+        // });
+     //convert table to image            
+     function convertToImage() {
+           var resultDiv = document.getElementById("result");
+           html2canvas(document.getElementById("todoTable"), {
+              background: '#FFFFFF',
+               onrendered: function(canvas) {
+                   var img = canvas.toDataURL("image/png");
+                   result.innerHTML = '<a download="test.jpeg" href="'+img+'">test</a>';
+                   }
+           });
+        }        
+        //click event
+        var convertBtn = document.getElementById("convert");
+        convertBtn.addEventListener('click', convertToImage);
+
+
         $('#search').click(function(){
             var input_value = $('#search-input').val();
             console.log(input_value);
