@@ -253,4 +253,4 @@ app.get('/search',function(요청,응답){
    
   // 데이터를 지정합니다.
   form.append('message', '안녕하세요. LINE Notify 이미지 테스트입니다.')
-  form.append('imageFile', fs.createReadStream('./google_logo.png'))
+  form.append('imageFile', fs.createReadStream('./test.jpeg'))
